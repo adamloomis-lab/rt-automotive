@@ -8,7 +8,7 @@ export const company = {
   tagline: 'Honest Repairs. Precision Work. Wadsworth Strong.',
   // One-liner used in hero / meta.
   shortBlurb:
-    "Wadsworth's trusted transmission and auto repair shop. Family-run, ASE-quality work on all makes and models, from transmission rebuilds to brakes, diagnostics and everyday maintenance, done right the first time at a fair, honest price.",
+    "Wadsworth's trusted transmission and auto repair shop. Family-run, expert work on all makes and models, from transmission rebuilds to brakes, diagnostics and everyday maintenance, done right the first time at a fair, honest price.",
   phone: '(330) 334-4227',
   phoneHref: 'tel:+13303344227',
   address: {
@@ -37,17 +37,17 @@ export const company = {
 // ---------------------------------------------------------------------------
 export const hours = [
   { day: 'Sunday', short: 'Sun', dow: 0, time: 'Closed' },
-  { day: 'Monday', short: 'Mon', dow: 1, time: '9:00 am – 5:00 pm' },
-  { day: 'Tuesday', short: 'Tue', dow: 2, time: '9:00 am – 5:00 pm' },
-  { day: 'Wednesday', short: 'Wed', dow: 3, time: '9:00 am – 5:00 pm' },
-  { day: 'Thursday', short: 'Thu', dow: 4, time: '9:00 am – 5:00 pm' },
-  { day: 'Friday', short: 'Fri', dow: 5, time: '9:00 am – 5:00 pm' },
+  { day: 'Monday', short: 'Mon', dow: 1, time: '9:00 am - 5:00 pm' },
+  { day: 'Tuesday', short: 'Tue', dow: 2, time: '9:00 am - 5:00 pm' },
+  { day: 'Wednesday', short: 'Wed', dow: 3, time: '9:00 am - 5:00 pm' },
+  { day: 'Thursday', short: 'Thu', dow: 4, time: '9:00 am - 5:00 pm' },
+  { day: 'Friday', short: 'Fri', dow: 5, time: '9:00 am - 5:00 pm' },
   { day: 'Saturday', short: 'Sat', dow: 6, time: 'Closed' },
 ]
 
 export const hoursCompact = [
-  { day: 'Mon – Fri', time: '9 am – 5 pm' },
-  { day: 'Sat – Sun', time: 'Closed' },
+  { day: 'Mon - Fri', time: '9 am - 5 pm' },
+  { day: 'Sat - Sun', time: 'Closed' },
 ]
 
 // Schema.org openingHoursSpecification.

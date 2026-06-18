@@ -77,7 +77,7 @@ export default function Home() {
               {ratingSummary.count} Google reviews
             </span>
             <span className="inline-flex items-center gap-2">
-              <Clock size={15} className="text-crimson" /> Mon–Fri 9am–5pm
+              <Clock size={15} className="text-crimson" /> Mon-Fri 9am-5pm
             </span>
             <a
               href={company.mapsDir}

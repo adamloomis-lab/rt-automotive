@@ -213,7 +213,7 @@ export function getPageMeta(rawPath: string): PageMeta {
     case '/contact':
       return {
         title: 'Contact & Hours | R/T Automotive & Transmission, Wadsworth OH',
-        description: `Find R/T Automotive & Transmission at ${company.addressOneLine}. Open Mon–Fri 9am–5pm. Request service or call ${company.phone}.`,
+        description: `Find R/T Automotive & Transmission at ${company.addressOneLine}. Open Mon-Fri 9am-5pm. Request service or call ${company.phone}.`,
         canonical: pageUrl('/contact'),
         ogImage,
         jsonLd: [
