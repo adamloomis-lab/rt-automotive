@@ -7,9 +7,9 @@ import {
   faqs as FAQS,
 } from '../data/site'
 
-// Production target domain. Staging serves from rt-automotive.netlify.app until
-// cutover. Canonicals, sitemap, OG and schema all point here.
-export const SITE_URL = 'https://rtautotransmission.com'
+// Production target domain. Staging serves from rt-auto-transmission.netlify.app
+// until cutover. Canonicals, sitemap, OG and schema all point here.
+export const SITE_URL = 'https://www.rtwadsworth.com'
 
 const OG_IMAGE = '/images/og-image.jpg'
 
@@ -70,7 +70,6 @@ export function shopSchema() {
     image: abs(OG_IMAGE),
     logo: abs('/images/logo-full.png'),
     telephone: company.phone,
-    email: company.email,
     priceRange: '$$',
     description: company.shortBlurb,
     slogan: company.tagline,
@@ -113,6 +112,9 @@ export function websiteSchema() {
     '@id': `${SITE_URL}/#website`,
     url: SITE_URL,
     name: company.name,
+    alternateName: 'R/T Automotive Wadsworth',
+    description: company.shortBlurb,
+    inLanguage: 'en-US',
     publisher: { '@id': `${SITE_URL}/#shop` },
   }
 }
@@ -236,7 +238,7 @@ export function getPageMeta(rawPath: string): PageMeta {
           'How R/T Automotive & Transmission collects, uses, and protects information submitted through this website.',
         canonical: pageUrl('/privacy'),
         ogImage,
-        jsonLd: [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy' }])],
+        jsonLd: [shopSchema(), breadcrumb([{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy' }])],
       }
     case '/terms':
       return {
@@ -244,7 +246,7 @@ export function getPageMeta(rawPath: string): PageMeta {
         description: 'The terms that govern your use of the R/T Automotive & Transmission website.',
         canonical: pageUrl('/terms'),
         ogImage,
-        jsonLd: [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Terms of Service', path: '/terms' }])],
+        jsonLd: [shopSchema(), breadcrumb([{ name: 'Home', path: '/' }, { name: 'Terms of Service', path: '/terms' }])],
       }
     case '/accessibility':
       return {
@@ -253,7 +255,7 @@ export function getPageMeta(rawPath: string): PageMeta {
           'Our commitment to making the R/T Automotive & Transmission website accessible to everyone, and how to reach us about accessibility.',
         canonical: pageUrl('/accessibility'),
         ogImage,
-        jsonLd: [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Accessibility', path: '/accessibility' }])],
+        jsonLd: [shopSchema(), breadcrumb([{ name: 'Home', path: '/' }, { name: 'Accessibility', path: '/accessibility' }])],
       }
     default:
       return {

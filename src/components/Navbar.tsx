@@ -4,6 +4,7 @@ import { Menu, X, Phone } from 'lucide-react'
 import Logo from './Logo'
 import { company } from '../data/site'
 import { useScrolled } from '../hooks/useScrolled'
+import { animatedCtaShell, AnimatedCtaInner } from './ui/button'
 
 const links = [
   { label: 'Home', href: '/' },
@@ -52,11 +53,8 @@ export default function Navbar() {
           >
             <Phone size={16} className="text-crimson" /> {company.phone}
           </a>
-          <Link
-            href="/contact"
-            className="skew-cta ml-1 bg-crimson px-6 py-3 font-cond text-[12px] font-bold uppercase tracking-[0.14em] text-on-crimson"
-          >
-            <span>Book Service</span>
+          <Link href="/contact" className={`${animatedCtaShell} ml-1`}>
+            <AnimatedCtaInner>Book Service</AnimatedCtaInner>
           </Link>
         </div>
 

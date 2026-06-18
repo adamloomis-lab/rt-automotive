@@ -9,7 +9,9 @@
     "preview": "vite preview --port 5247 --strictPort"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
     "lucide-react": "^0.453.0",
+    "motion": "^12.40.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "wouter": "^3.3.5"

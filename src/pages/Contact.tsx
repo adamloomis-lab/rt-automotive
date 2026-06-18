@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from 'react'
-import { MapPin, Phone, Facebook, Plus, Clock, CheckCircle2, Mail } from 'lucide-react'
+import { MapPin, Phone, Facebook, Plus, Clock, CheckCircle2 } from 'lucide-react'
 import { company } from '../data/site'
 import { faqs } from '../lib/seo'
 import HoursList from '../components/HoursList'
+import { AnimatedLayerButton } from '../components/ui/button'
 
 const serviceOptions = [
   'Transmission Repair / Rebuild',
@@ -165,13 +166,9 @@ function ServiceForm() {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === 'submitting'}
-        className="skew-cta w-full bg-crimson py-4 font-cond text-[13px] font-bold uppercase tracking-[0.16em] text-on-crimson disabled:opacity-60"
-      >
-        <span>{status === 'submitting' ? 'Sending…' : 'Request Service'}</span>
-      </button>
+      <AnimatedLayerButton type="submit" disabled={status === 'submitting'} className="w-full">
+        {status === 'submitting' ? 'Sending…' : 'Request Service'}
+      </AnimatedLayerButton>
       <p className="text-center text-[12px] text-chalk-faint">
         We&rsquo;ll never share your information. Prefer to talk? Call {company.phone}.
       </p>
@@ -224,12 +221,6 @@ export default function Contact() {
                   <Phone size={22} className="mt-0.5 shrink-0 text-crimson" />
                   <a href={company.phoneHref} className="text-chalk-dim hover:text-chalk">
                     {company.phone}
-                  </a>
-                </li>
-                <li className="flex items-start gap-4">
-                  <Mail size={22} className="mt-0.5 shrink-0 text-crimson" />
-                  <a href={`mailto:${company.email}`} className="text-chalk-dim hover:text-chalk">
-                    {company.email}
                   </a>
                 </li>
                 <li className="flex items-start gap-4">

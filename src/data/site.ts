@@ -11,7 +11,6 @@ export const company = {
     "Wadsworth's trusted transmission and auto repair shop. Family-run, ASE-quality work on all makes and models, from transmission rebuilds to brakes, diagnostics and everyday maintenance, done right the first time at a fair, honest price.",
   phone: '(330) 334-4227',
   phoneHref: 'tel:+13303344227',
-  email: 'service@rtautotransmission.com',
   address: {
     street: '349 Main St',
     city: 'Wadsworth',

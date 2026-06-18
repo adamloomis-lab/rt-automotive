@@ -366,6 +366,16 @@
   .ticker { animation: none; }
 }
 
+/* Slow gear spin for the animated CTA buttons */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-spin-slow {
+    animation: rt-spin 5s linear infinite;
+  }
+}
+@keyframes rt-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Slow Ken Burns drift on dark hero / section media */
 .kenburns {
   animation: rt-kenburns 34s ease-in-out infinite alternate;
