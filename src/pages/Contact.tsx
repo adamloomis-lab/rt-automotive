@@ -193,6 +193,23 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* ---------- STOREFRONT PHOTO ---------- */}
+      <section className="container-x pt-12 md:pt-16">
+        <figure className="reveal mx-auto max-w-4xl overflow-hidden rounded-xl border border-line">
+          <img
+            src="/images/storefront.jpg"
+            alt="R/T Automotive & Transmission storefront on Main Street in Wadsworth, Ohio — Wadsworth's first choice for transmission and automotive repair"
+            width={960}
+            height={589}
+            loading="lazy"
+            className="w-full object-cover"
+          />
+          <figcaption className="border-t border-line bg-pitch-2 px-5 py-3 text-center font-cond text-[12px] font-bold uppercase tracking-[0.16em] text-chalk-faint">
+            Wadsworth&rsquo;s First Choice for Transmission &amp; Automotive Repair · 349 Main St
+          </figcaption>
+        </figure>
+      </section>
+
       {/* ---------- FORM + DETAILS ---------- */}
       <section className="py-16 md:py-20">
         <div className="container-x grid gap-12 lg:grid-cols-5">
