@@ -1,0 +1,98 @@
+import { useState } from 'react'
+import { Link, useLocation } from 'wouter'
+import { Menu, X, Phone } from 'lucide-react'
+import Logo from './Logo'
+import { company } from '../data/site'
+import { useScrolled } from '../hooks/useScrolled'
+
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+]
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false)
+  const [location] = useLocation()
+  const scrolled = useScrolled(40)
+
+  const linkBase =
+    'font-cond text-[13px] font-bold uppercase tracking-[0.14em] px-1 py-2 transition-colors'
+
+  return (
+    <header
+      className={`fixed top-0 z-50 w-full border-b border-line-soft backdrop-blur-md transition-colors duration-300 ${
+        scrolled || open ? 'bg-pitch/95 shadow-[0_4px_24px_rgba(0,0,0,0.5)]' : 'bg-pitch/70'
+      }`}
+    >
+      <nav className="container-x flex h-20 items-center justify-between lg:h-24">
+        <Logo className="h-12 lg:h-14" />
+
+        <div className="hidden items-center gap-7 lg:flex">
+          {links.map((l) => {
+            const active = l.href === location
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`${linkBase} ${
+                  active
+                    ? 'border-b-2 border-crimson text-crimson-light'
+                    : 'text-chalk-dim hover:text-chalk'
+                }`}
+              >
+                {l.label}
+              </Link>
+            )
+          })}
+          <a
+            href={company.phoneHref}
+            className="ml-1 inline-flex items-center gap-2 font-cond text-[13px] font-bold uppercase tracking-[0.1em] text-chalk transition-colors hover:text-crimson-light"
+          >
+            <Phone size={16} className="text-crimson" /> {company.phone}
+          </a>
+          <Link
+            href="/contact"
+            className="skew-cta ml-1 bg-crimson px-6 py-3 font-cond text-[12px] font-bold uppercase tracking-[0.14em] text-on-crimson"
+          >
+            <span>Book Service</span>
+          </Link>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="text-chalk lg:hidden"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+        >
+          {open ? <X size={32} /> : <Menu size={32} />}
+        </button>
+      </nav>
+
+      {open && (
+        <div className="border-t border-line-soft bg-pitch lg:hidden">
+          <div className="container-x flex flex-col gap-1 py-5">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="rounded px-2 py-4 font-cond text-base font-bold uppercase tracking-[0.14em] text-chalk hover:text-crimson-light"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <a
+              href={company.phoneHref}
+              className="mt-2 inline-flex items-center justify-center gap-2 bg-crimson px-5 py-4 font-cond text-sm font-bold uppercase tracking-[0.12em] text-on-crimson"
+            >
+              <Phone size={18} /> Call {company.phone}
+            </a>
+          </div>
+        </div>
+      )}
+    </header>
+  )
+}
