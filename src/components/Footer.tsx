@@ -1,117 +1,177 @@
 import { Link } from 'wouter'
-import { Phone, MapPin, Facebook, Clock } from 'lucide-react'
+import { Phone, MapPin, Clock, Facebook, Star } from 'lucide-react'
 import Logo from './Logo'
-import { company, hoursCompact } from '../data/site'
+import { company } from '../data/site'
 
-const explore = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact & Directions', href: '/contact' },
+// 4-column footer (adapted from the mvpblocks Footer4Col): next/link -> wouter,
+// shadcn tokens -> the R/T dark/red theme, real R/T links + NAP, no email.
+
+const exploreLinks = [
+  { text: 'Home', href: '/' },
+  { text: 'Services', href: '/services' },
+  { text: 'About Us', href: '/about' },
+  { text: 'Contact', href: '/contact' },
 ]
 
-const policies = [
-  { label: 'Privacy Policy', href: '/privacy' },
-  { label: 'Terms of Service', href: '/terms' },
-  { label: 'Accessibility', href: '/accessibility' },
+const serviceLinks = [
+  { text: 'Transmission Repair', href: '/services' },
+  { text: 'Transmission Service', href: '/services' },
+  { text: 'Engine Diagnostics', href: '/services' },
+  { text: 'Brakes & Suspension', href: '/services' },
 ]
+
+const helpfulLinks = [
+  { text: 'Book Service', href: '/contact', hasIndicator: true },
+  { text: 'Read Our Reviews', href: '/#reviews' },
+  { text: 'Privacy Policy', href: '/privacy' },
+  { text: 'Terms of Service', href: '/terms' },
+  { text: 'Accessibility', href: '/accessibility' },
+]
+
+const linkCls = 'text-chalk-dim transition-colors hover:text-chalk'
+const headingCls = 'font-cond text-headline-sm font-bold uppercase text-gold'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t-2 border-crimson bg-pitch-deep text-chalk-dim">
-      <div className="container-x grid gap-12 py-16 md:grid-cols-4">
-        <div className="md:col-span-1">
-          <Logo className="h-14" />
-          <p className="mt-5 max-w-xs text-body-md">
-            {company.tagline} Wadsworth&rsquo;s family-run transmission and auto repair shop, doing
-            honest work on all makes and models.
-          </p>
-          <div className="mt-5 flex items-center gap-3">
-            <a
-              href={company.social.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded border border-line text-chalk transition-colors hover:border-crimson hover:text-crimson-light"
-              aria-label="R/T Automotive & Transmission on Facebook"
-            >
-              <Facebook size={18} />
-            </a>
+    <footer className="w-full border-t-2 border-crimson bg-pitch-deep text-chalk-dim">
+      <div className="container-x pt-16 pb-6 lg:pt-20">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+          {/* Brand */}
+          <div>
+            <Logo className="h-12" />
+            <p className="mt-6 max-w-md text-body-md leading-relaxed">
+              {company.tagline} Wadsworth&rsquo;s family-run transmission and auto repair shop, doing
+              honest work on all makes and models.
+            </p>
+            <ul className="mt-7 flex gap-3">
+              <li>
+                <a
+                  href={company.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded border border-line text-chalk transition-colors hover:border-crimson hover:text-crimson-light"
+                >
+                  <span className="sr-only">R/T Automotive on Facebook</span>
+                  <Facebook className="size-5" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={company.mapsReviews}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded border border-line text-chalk transition-colors hover:border-crimson hover:text-crimson-light"
+                >
+                  <span className="sr-only">R/T Automotive reviews on Google</span>
+                  <Star className="size-5" />
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Link columns */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-2">
+            <div>
+              <p className={headingCls}>Explore</p>
+              <ul className="mt-6 space-y-3 text-sm">
+                {exploreLinks.map(({ text, href }) => (
+                  <li key={text}>
+                    <Link href={href} className={linkCls}>
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className={headingCls}>Services</p>
+              <ul className="mt-6 space-y-3 text-sm">
+                {serviceLinks.map(({ text, href }) => (
+                  <li key={text}>
+                    <Link href={href} className={linkCls}>
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className={headingCls}>Helpful</p>
+              <ul className="mt-6 space-y-3 text-sm">
+                {helpfulLinks.map(({ text, href, hasIndicator }) => (
+                  <li key={text}>
+                    <Link href={href} className={`flex items-center gap-1.5 ${linkCls}`}>
+                      <span>{text}</span>
+                      {hasIndicator && (
+                        <span className="relative flex size-2">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-crimson opacity-75" />
+                          <span className="relative inline-flex size-2 rounded-full bg-crimson" />
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className={headingCls}>Contact</p>
+              <ul className="mt-6 space-y-4 text-sm">
+                <li>
+                  <a href={company.phoneHref} className="flex items-start gap-2.5 hover:text-chalk">
+                    <Phone className="size-5 shrink-0 text-crimson" />
+                    <span className="flex-1">{company.phone}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={company.mapsDir}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2.5 hover:text-chalk"
+                  >
+                    <MapPin className="size-5 shrink-0 text-crimson" />
+                    <address className="flex-1 not-italic">
+                      {company.address.street}
+                      <br />
+                      {company.address.city}, {company.address.state} {company.address.zip}
+                    </address>
+                  </a>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Clock className="size-5 shrink-0 text-crimson" />
+                  <span className="flex-1">
+                    Mon&ndash;Fri: 9am&ndash;5pm
+                    <br />
+                    Sat &amp; Sun: Closed
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div>
-          <h3 className="font-cond text-headline-sm font-bold uppercase text-gold">Visit</h3>
-          <ul className="mt-5 space-y-4 text-body-md">
-            <li className="flex items-start gap-3">
-              <MapPin size={18} className="mt-0.5 shrink-0 text-crimson" />
-              <a href={company.mapsDir} target="_blank" rel="noopener noreferrer" className="hover:text-chalk">
-                {company.address.street}
-                <br />
-                {company.address.city}, {company.address.state} {company.address.zip}
+        {/* Bottom bar */}
+        <div className="mt-12 border-t border-line-soft pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 text-label-sm uppercase tracking-[0.16em] text-chalk-faint sm:flex-row">
+            <span className="order-2 sm:order-1">
+              © {year} {company.legalName}. All rights reserved.
+            </span>
+            <span className="order-1 sm:order-2">
+              Website by{' '}
+              <a
+                href="https://adamloomismarketing.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-chalk-dim transition-colors hover:text-crimson-light"
+              >
+                Adam Loomis Marketing
               </a>
-            </li>
-            <li>
-              <a href={company.phoneHref} className="flex items-start gap-3 hover:text-chalk">
-                <Phone size={18} className="mt-0.5 shrink-0 text-crimson" />
-                <span>{company.phone}</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-cond text-headline-sm font-bold uppercase text-gold">Hours</h3>
-          <ul className="mt-5 space-y-2.5 text-body-md">
-            {hoursCompact.map((h) => (
-              <li key={h.day} className="flex items-baseline justify-between gap-3">
-                <span className="text-chalk-dim">{h.day}</span>
-                <span className="whitespace-nowrap text-chalk">{h.time}</span>
-              </li>
-            ))}
-            <li className="flex items-center gap-2 pt-1 text-[12px] uppercase tracking-[0.14em] text-chalk-faint">
-              <Clock size={13} className="text-crimson" /> By appointment recommended
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-cond text-headline-sm font-bold uppercase text-gold">Explore</h3>
-          <ul className="mt-5 space-y-3 text-body-md">
-            {explore.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="hover:text-chalk">
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-line-soft">
-        <div className="container-x flex flex-col items-center justify-between gap-4 py-6 text-label-sm uppercase tracking-[0.16em] text-chalk-faint sm:flex-row">
-          <span className="order-2 sm:order-1">
-            © {year} {company.legalName}. All rights reserved.
-          </span>
-          <div className="order-1 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:order-2">
-            {policies.map((p) => (
-              <Link key={p.href} href={p.href} className="transition-colors hover:text-chalk">
-                {p.label}
-              </Link>
-            ))}
+            </span>
           </div>
-          <span className="order-3">
-            Website by{' '}
-            <a
-              href="https://adamloomismarketing.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-chalk-dim transition-colors hover:text-crimson-light"
-            >
-              Adam Loomis Marketing
-            </a>
-          </span>
         </div>
       </div>
     </footer>
