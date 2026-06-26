@@ -59,7 +59,7 @@ function FaqAccordion() {
 }
 
 const fieldCls =
-  'w-full rounded-sm border border-line bg-pitch px-4 py-3 text-body-md text-chalk placeholder:text-chalk-faint outline-none transition-colors focus:border-crimson'
+  'w-full rounded-sm border border-line bg-pitch px-4 py-3 text-body-md text-chalk placeholder:text-chalk-faint focus-visible:outline-none transition-colors focus:border-crimson'
 const labelCls = 'mb-1.5 block font-cond text-[12px] font-bold uppercase tracking-[0.14em] text-chalk-dim'
 
 function ServiceForm() {

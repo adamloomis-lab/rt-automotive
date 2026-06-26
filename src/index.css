@@ -377,20 +377,25 @@
 }
 
 /* Slow Ken Burns drift on dark hero / section media */
-.kenburns {
-  animation: rt-kenburns 34s ease-in-out infinite alternate;
-  transform-origin: center;
-  will-change: transform;
-}
-@keyframes rt-kenburns {
-  from { transform: scale(1.06) translate3d(0, 0, 0); }
-  to { transform: scale(1.14) translate3d(0, -1.5%, 0); }
+@media (prefers-reduced-motion: no-preference) {
+  .kenburns {
+    animation: rt-kenburns 34s ease-in-out infinite alternate;
+    transform-origin: center;
+    will-change: transform;
+  }
+  @keyframes rt-kenburns {
+    from { transform: scale(1.06) translate3d(0, 0, 0); }
+    to { transform: scale(1.14) translate3d(0, -1.5%, 0); }
+  }
 }
 
 /* Parallax: useParallax writes --p (0..1 viewport progress); element drifts. */
 .parallax {
   transform: translate3d(0, calc((var(--p, 0.5) - 0.5) * 2 * var(--p-amt, 28px)), 0);
   will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .parallax { transform: none; }
 }
 
 /* ---- Scroll-reveal + entrance motion ---------------------------------- */
@@ -428,4 +433,10 @@
   .reveal-ready .reveal-group.is-visible > *:nth-child(4) { transition-delay: 0.3s; }
   .reveal-ready .reveal-group.is-visible > *:nth-child(5) { transition-delay: 0.4s; }
   .reveal-ready .reveal-group.is-visible > *:nth-child(6) { transition-delay: 0.5s; }
+}
+
+/* WCAG 2.4.7 keyboard focus */
+*:focus-visible {
+  outline: 2px solid var(--color-crimson-light);
+  outline-offset: 3px;
 }
