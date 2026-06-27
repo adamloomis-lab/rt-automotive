@@ -198,7 +198,7 @@ export default function Contact() {
         <figure className="reveal mx-auto max-w-4xl overflow-hidden rounded-xl border border-line">
           <img
             src="/images/storefront.jpg"
-            alt="R/T Automotive & Transmission storefront on Main Street in Wadsworth, Ohio — Wadsworth's first choice for transmission and automotive repair"
+            alt="R/T Automotive & Transmission storefront on Main Street in Wadsworth, Ohio, Wadsworth's first choice for transmission and automotive repair"
             width={960}
             height={589}
             loading="lazy"
