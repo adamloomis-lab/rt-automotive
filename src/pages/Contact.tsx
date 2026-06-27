@@ -1,18 +1,34 @@
-import { useState, type FormEvent } from 'react'
-import { MapPin, Phone, Facebook, Plus, Clock, CheckCircle2 } from 'lucide-react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+import {
+  MapPin,
+  Phone,
+  Facebook,
+  Plus,
+  Clock,
+  Cog,
+  Droplets,
+  Gauge,
+  Disc3,
+  Settings2,
+  Wrench,
+  MoreHorizontal,
+} from 'lucide-react'
 import { company } from '../data/site'
 import { faqs } from '../lib/seo'
 import HoursList from '../components/HoursList'
+import { FloatField, SuccessCheck } from '../components/FluidField'
 import { AnimatedLayerButton } from '../components/ui/button'
 
-const serviceOptions = [
-  'Transmission Repair / Rebuild',
-  'Transmission Service / Fluid',
-  'Engine Diagnostics / Check Engine Light',
-  'Brakes & Suspension',
-  'Clutch Repair',
-  'General Repair / Maintenance',
-  'Other / Not Sure',
+// Single-select icon cards. `value` is identical to the prior <select> options
+// so the Netlify "service" field payload is unchanged. Icons are literal.
+const serviceCards = [
+  { value: 'Transmission Repair / Rebuild', label: 'Transmission Repair', Icon: Cog },
+  { value: 'Transmission Service / Fluid', label: 'Service & Fluid', Icon: Droplets },
+  { value: 'Engine Diagnostics / Check Engine Light', label: 'Engine Diagnostics', Icon: Gauge },
+  { value: 'Brakes & Suspension', label: 'Brakes & Suspension', Icon: Disc3 },
+  { value: 'Clutch Repair', label: 'Clutch Repair', Icon: Settings2 },
+  { value: 'General Repair / Maintenance', label: 'General Repair', Icon: Wrench },
+  { value: 'Other / Not Sure', label: 'Other / Not Sure', Icon: MoreHorizontal },
 ]
 
 const encode = (data: Record<string, string>) =>
@@ -58,17 +74,29 @@ function FaqAccordion() {
   )
 }
 
-const fieldCls =
-  'w-full rounded-sm border border-line bg-pitch px-4 py-3 text-body-md text-chalk placeholder:text-chalk-faint focus-visible:outline-none transition-colors focus:border-crimson'
-const labelCls = 'mb-1.5 block font-cond text-[12px] font-bold uppercase tracking-[0.14em] text-chalk-dim'
+const initialValues = {
+  name: '',
+  phone: '',
+  email: '',
+  vehicle: '',
+  message: '',
+}
 
 function ServiceForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'ok' | 'error'>('idle')
+  const [values, setValues] = useState(initialValues)
+  const [service, setService] = useState('')
+  const [firstName, setFirstName] = useState('')
+
+  const onField = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setValues((v) => ({ ...v, [e.target.name]: e.target.value }))
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const form = e.currentTarget
     const data = Object.fromEntries(new FormData(form) as unknown as Iterable<[string, string]>)
+    // Capture the submitter's first name before any reset, for the thank-you.
+    setFirstName((values.name.trim().split(/\s+/)[0] || '').slice(0, 24))
     setStatus('submitting')
     try {
       const res = await fetch('/', {
@@ -77,7 +105,11 @@ function ServiceForm() {
         body: encode({ 'form-name': 'service-request', ...data }),
       })
       setStatus(res.ok ? 'ok' : 'error')
-      if (res.ok) form.reset()
+      if (res.ok) {
+        form.reset()
+        setValues(initialValues)
+        setService('')
+      }
     } catch {
       setStatus('error')
     }
@@ -86,15 +118,20 @@ function ServiceForm() {
   if (status === 'ok') {
     return (
       <div className="machined p-10 text-center">
-        <CheckCircle2 size={44} className="mx-auto text-crimson" aria-hidden="true" />
-        <h3 className="mt-4 font-display text-headline-md text-chalk">Request Received</h3>
+        <SuccessCheck />
+        <h3 className="mt-5 font-display text-headline-md text-chalk">
+          Thank You{firstName ? `, ${firstName}` : ''}!
+        </h3>
         <p className="mx-auto mt-3 max-w-sm text-body-md text-chalk-dim">
-          Thanks! We&rsquo;ll get back to you shortly. Need a faster answer? Call us at{' '}
-          <a href={company.phoneHref} className="text-crimson-light underline underline-offset-2">
-            {company.phone}
-          </a>
-          .
+          Your request is in. We&rsquo;ll get back to you shortly with a straight, fair estimate.
+          Need a faster answer?
         </p>
+        <a
+          href={company.phoneHref}
+          className="mt-6 inline-flex items-center gap-2 bg-crimson px-6 py-3 font-cond text-[13px] font-bold uppercase tracking-[0.14em] text-on-crimson transition-colors hover:bg-crimson-dark"
+        >
+          <Phone size={17} /> Call {company.phone}
+        </a>
       </div>
     )
   }
@@ -117,48 +154,59 @@ function ServiceForm() {
       </p>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="name" className={labelCls}>Name *</label>
-          <input id="name" name="name" required autoComplete="name" className={fieldCls} placeholder="Your name" />
-        </div>
-        <div>
-          <label htmlFor="phone" className={labelCls}>Phone *</label>
-          <input id="phone" name="phone" type="tel" required autoComplete="tel" className={fieldCls} placeholder="(330) 000-0000" />
-        </div>
+        <FloatField name="name" label="Name" value={values.name} onChange={onField} required autoComplete="name" />
+        <FloatField name="phone" label="Phone" type="tel" value={values.phone} onChange={onField} required autoComplete="tel" />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="email" className={labelCls}>Email</label>
-          <input id="email" name="email" type="email" autoComplete="email" className={fieldCls} placeholder="you@email.com" />
-        </div>
-        <div>
-          <label htmlFor="vehicle" className={labelCls}>Vehicle (Year / Make / Model)</label>
-          <input id="vehicle" name="vehicle" className={fieldCls} placeholder="e.g. 2016 Honda Accord" />
-        </div>
+        <FloatField name="email" label="Email" type="email" value={values.email} onChange={onField} autoComplete="email" />
+        <FloatField name="vehicle" label="Vehicle (Year / Make / Model)" value={values.vehicle} onChange={onField} />
       </div>
 
-      <div>
-        <label htmlFor="service" className={labelCls}>What do you need? *</label>
-        <select id="service" name="service" required defaultValue="" className={fieldCls}>
-          <option value="" disabled>Select a service…</option>
-          {serviceOptions.map((o) => (
-            <option key={o} value={o}>{o}</option>
-          ))}
-        </select>
-      </div>
+      {/* Single-select service icon cards. Hidden input carries the value. */}
+      <fieldset>
+        <legend className="mb-3 block font-cond text-[12px] font-bold uppercase tracking-[0.14em] text-chalk-dim">
+          What do you need? <span className="text-crimson">*</span>
+        </legend>
+        <input type="hidden" name="service" value={service} required />
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+          {serviceCards.map(({ value, label, Icon }) => {
+            const active = service === value
+            return (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setService(value)}
+                aria-pressed={active}
+                className={`group flex flex-col items-center gap-2 rounded-sm border p-3 text-center transition-all duration-200 ${
+                  active
+                    ? 'border-crimson bg-crimson text-on-crimson shadow-[0_8px_22px_-10px_rgba(227,6,19,0.7)]'
+                    : 'border-line bg-pitch text-chalk-dim hover:border-crimson hover:text-chalk'
+                }`}
+              >
+                <Icon
+                  size={24}
+                  className={active ? 'text-on-crimson' : 'text-crimson'}
+                  aria-hidden="true"
+                />
+                <span className="font-cond text-[11px] font-bold uppercase leading-tight tracking-[0.08em]">
+                  {label}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </fieldset>
 
-      <div>
-        <label htmlFor="message" className={labelCls}>What&rsquo;s going on? *</label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={4}
-          className={`${fieldCls} resize-y`}
-          placeholder="Describe the symptoms, noises, warning lights or service you're after."
-        />
-      </div>
+      <FloatField
+        name="message"
+        label="What's going on? Symptoms, noises, warning lights"
+        value={values.message}
+        onChange={onField}
+        required
+        textarea
+        rows={4}
+      />
 
       {status === 'error' && (
         <p className="text-sm text-error">

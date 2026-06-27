@@ -4,6 +4,7 @@ import Seo from './components/Seo'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import CallBar from './components/CallBar'
+import StickyBook from './components/StickyBook'
 import CookieBanner from './components/CookieBanner'
 import { useScrollReveal } from './hooks/useScrollReveal'
 import { useParallax } from './hooks/useParallax'
@@ -45,6 +46,7 @@ function Shell() {
       </main>
       <Footer />
       <CallBar />
+      <StickyBook />
       <CookieBanner />
     </>
   )

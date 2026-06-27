@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       {/* ------------------------------------------------ Hero */}
-      <section className="hero-clip tech-grid relative flex min-h-[92vh] items-center overflow-hidden">
+      <section id="hero" className="hero-clip tech-grid relative flex min-h-[92vh] items-center overflow-hidden">
         <div className="absolute inset-0">
           <video
             className="h-full w-full object-cover"

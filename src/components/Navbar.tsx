@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'wouter'
-import { Menu, X, Phone } from 'lucide-react'
+import { Menu, Phone } from 'lucide-react'
 import Logo from './Logo'
+import MobileMenu from './MobileMenu'
 import { company } from '../data/site'
 import { useScrolled } from '../hooks/useScrolled'
 import { animatedCtaShell, AnimatedCtaInner } from './ui/button'
@@ -60,37 +61,16 @@ export default function Navbar() {
 
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen(true)}
           className="text-chalk lg:hidden"
-          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-label="Open menu"
           aria-expanded={open}
         >
-          {open ? <X size={32} /> : <Menu size={32} />}
+          <Menu size={32} />
         </button>
       </nav>
 
-      {open && (
-        <div className="border-t border-line-soft bg-pitch lg:hidden">
-          <div className="container-x flex flex-col gap-1 py-5">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="rounded px-2 py-4 font-cond text-base font-bold uppercase tracking-[0.14em] text-chalk hover:text-crimson-light"
-              >
-                {l.label}
-              </Link>
-            ))}
-            <a
-              href={company.phoneHref}
-              className="mt-2 inline-flex items-center justify-center gap-2 bg-crimson px-5 py-4 font-cond text-sm font-bold uppercase tracking-[0.12em] text-on-crimson"
-            >
-              <Phone size={18} /> Call {company.phone}
-            </a>
-          </div>
-        </div>
-      )}
+      <MobileMenu open={open} onClose={() => setOpen(false)} />
     </header>
   )
 }
